@@ -205,6 +205,7 @@ function Dashboard() {
                     ) {
                       try {
                         await deleteSurvey(survey.id);
+
                         // Refresh surveys
                         const surveysQuery = query(
                           collection(db, "surveys"),
@@ -218,8 +219,10 @@ function Dashboard() {
                           }))
                         );
 
-                        // Refresh responses
-                        // ... your existing response loading logic
+                        // Optional: Refresh responses too
+                        // ... your response loading logic here ...
+
+                        alert("Survey deleted successfully!");
                       } catch (err) {
                         alert("Failed to delete: " + err.message);
                       }

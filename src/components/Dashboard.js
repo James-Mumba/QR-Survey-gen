@@ -4,12 +4,14 @@ import { db } from "../utils/firebase";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import "./Dashboard.css";
+import { deleteSurvey } from "../utils/surveyService";
 
 function Dashboard() {
   const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all"); // 'today', 'yesterday', 'thisWeek', 'all'
   const [error, setError] = useState("");
+  const [surveys, setSurveys] = useState([]); // 👈 ADD THIS
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -37,11 +39,11 @@ function Dashboard() {
         }
 
         // Then get all responses for those surveys
+        // Build base query
         let responsesQuery = query(
           collection(db, "responses"),
           where("surveyId", "in", surveyIds)
         );
-        responsesQuery = query(responsesQuery, orderBy("submittedAt", "desc"));
 
         // Add date filters
         const now = new Date();
@@ -64,14 +66,15 @@ function Dashboard() {
             now.getMonth(),
             now.getDate()
           );
-          // We'll filter client-side since Firestore doesn't support "between" easily
         } else if (filter === "thisWeek") {
           const day = now.getDay();
           const diff = now.getDate() - day + (day === 0 ? -6 : 1); // Monday
           startDate = new Date(now.setDate(diff));
         }
 
+        // 👇 ORDER BY — ONLY ONCE!
         responsesQuery = query(responsesQuery, orderBy("submittedAt", "desc"));
+
         const responsesSnapshot = await getDocs(responsesQuery);
 
         let filteredResponses = responsesSnapshot.docs.map((doc) => ({
@@ -120,6 +123,30 @@ function Dashboard() {
     fetchResponses();
   }, [user, filter]);
 
+  // Load surveys created by user
+  useEffect(() => {
+    if (!user) return;
+
+    const loadSurveys = async () => {
+      try {
+        const surveysQuery = query(
+          collection(db, "surveys"),
+          where("createdBy", "==", user.uid)
+        );
+        const snapshot = await getDocs(surveysQuery);
+        const surveyList = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setSurveys(surveyList);
+      } catch (err) {
+        console.error("Error loading surveys:", err);
+      }
+    };
+
+    loadSurveys();
+  }, [user]);
+
   const formatDate = (timestamp) => {
     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
     return new Intl.DateTimeFormat("en-US", {
@@ -136,7 +163,77 @@ function Dashboard() {
         <h1>📊 Survey Dashboard</h1>
         <p>View and analyze all responses</p>
       </div>
+      {/* Add this section */}
+      <div className="surveys-section">
+        <h2>📋 My Uploaded Surveys</h2>
+        {surveys.length === 0 ? (
+          <p>No surveys uploaded yet.</p>
+        ) : (
+          <div className="surveys-grid">
+            {surveys.map((survey) => (
+              <div key={survey.id} className="survey-card">
+                <h3>
+                  {survey.questions?.[0]?.substring(0, 50) || "Untitled Survey"}
+                  ...
+                </h3>
+                <p>
+                  <strong>ID:</strong> {survey.id}
+                </p>
+                <p>
+                  <strong>Created:</strong>{" "}
+                  {survey.createdAt?.toDate?.()?.toLocaleString() || "Unknown"}
+                </p>
+                <p>
+                  <strong>Responses:</strong> {survey.responses?.length || 0}
+                </p>
 
+                {/* Add next to delete button: */}
+                <button
+                  onClick={() =>
+                    (window.location.href = `/reports?surveyId=${survey.id}`)
+                  }
+                  className="report-btn"
+                >
+                  📊 Generate Report
+                </button>
+                <button
+                  onClick={async () => {
+                    if (
+                      window.confirm(
+                        "Delete this survey and ALL its responses? This cannot be undone."
+                      )
+                    ) {
+                      try {
+                        await deleteSurvey(survey.id);
+                        // Refresh surveys
+                        const surveysQuery = query(
+                          collection(db, "surveys"),
+                          where("createdBy", "==", user.uid)
+                        );
+                        const snapshot = await getDocs(surveysQuery);
+                        setSurveys(
+                          snapshot.docs.map((doc) => ({
+                            id: doc.id,
+                            ...doc.data(),
+                          }))
+                        );
+
+                        // Refresh responses
+                        // ... your existing response loading logic
+                      } catch (err) {
+                        alert("Failed to delete: " + err.message);
+                      }
+                    }
+                  }}
+                  className="delete-btn"
+                >
+                  🗑️ Delete Survey
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
       <div className="filter-bar">
         <button
           className={filter === "all" ? "filter-btn active" : "filter-btn"}

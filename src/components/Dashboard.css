@@ -155,6 +155,83 @@
   color: #ff6b6b;
 }
 
+/* Add to Dashboard.css */
+.surveys-section {
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+}
+
+.surveys-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+.surveys-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.survey-card {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 16px;
+  transition: transform 0.2s ease;
+}
+
+.survey-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.15);
+}
+
+.survey-card h3 {
+  margin: 0 0 15px;
+  font-size: 1.2rem;
+  color: #ffdd57;
+}
+
+.survey-card p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+.delete-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #ff5252;
+  transform: scale(1.05);
+}
+
+.report-btn {
+  background: #4ecdc4;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  margin-right: 10px;
+  transition: all 0.2s ease;
+}
+
+.report-btn:hover {
+  background: #44a08d;
+  transform: scale(1.05);
+}
+
 /* 📱 RESPONSIVE */
 @media (max-width: 768px) {
   .dashboard-container {

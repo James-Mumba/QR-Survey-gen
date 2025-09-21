@@ -70,6 +70,15 @@ function ReportGenerator() {
     loadResponses();
   }, [selectedSurvey]);
 
+  // After loading surveyList
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const surveyId = urlParams.get("surveyId");
+    if (surveyId && surveyList.find((s) => s.id === surveyId)) {
+      setSelectedSurvey(surveyId);
+    }
+  }, [surveyList]);
+
   const calculateStats = (responseList) => {
     if (responseList.length === 0) {
       setStats(null);

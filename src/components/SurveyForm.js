@@ -12,8 +12,9 @@ function SurveyForm() {
   const [survey, setSurvey] = useState(null);
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(true);
   const [error, setError] = useState("");
+  const [responseId, setResponseId] = useState("");
 
   useEffect(() => {
     const fetchSurvey = async () => {
@@ -53,6 +54,7 @@ function SurveyForm() {
 
     try {
       const responseId = await submitResponse(surveyId, answers);
+      setResponseId(responseId);
       setSubmitted(true);
       alert(`Thank you! Response saved with ID: ${responseId}`);
     } catch (err) {
@@ -99,11 +101,20 @@ function SurveyForm() {
             <h2>Thank You!</h2>
             <p>Your response has been recorded.</p>
             <p className="response-id">
-              Response ID: RESP-
-              {Math.floor(Math.random() * 10000)
-                .toString()
-                .padStart(4, "0")}
+              Response ID: <strong>{responseId}</strong>
             </p>
+            <button
+              onClick={() => navigator.clipboard.writeText(responseId)}
+              className="copy-btn"
+            >
+              📋 Copy ID
+            </button>
+            <p className="info">
+              The survey creator can now view your response in their dashboard.
+            </p>
+            <button onClick={() => window.close()} className="close-btn">
+              Close Window
+            </button>
           </div>
         )}
       </form>

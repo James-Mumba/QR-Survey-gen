@@ -13,7 +13,7 @@ function SurveyUpload() {
   const [surveyId, setSurveyId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [expiryDate, setExpiryDate] = useState('');
+  const [expiryDate, setExpiryDate] = useState("");
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -80,14 +80,14 @@ function SurveyUpload() {
           {loading ? "🚀 Processing..." : "✨ Generate QR Survey"}
         </button>
         <div className="expiry-section">
-  <label>Set Expiry Date/Time (optional):</label>
-  <input
-    type="datetime-local"
-    value={expiryDate}
-    onChange={(e) => setExpiryDate(e.target.value)}
-    className="expiry-input"
-  />
-</div>
+          <label>Set Expiry Date/Time (optional):</label>
+          <input
+            type="datetime-local"
+            value={expiryDate}
+            onChange={(e) => setExpiryDate(e.target.value)}
+            className="expiry-input"
+          />
+        </div>
 
         {error && <p className="error-message">{error}</p>}
       </div>
@@ -102,7 +102,7 @@ function SurveyUpload() {
           <p className="share-url">yourapp.com/fill/{surveyId}</p>
           {/* QR code goes here */}
           <QRCodeCanvas
-            value={`https://yourapp.com/fill/${surveyId}`}
+            value={`${window.location.origin}/fill/${surveyId}`}
             size={200}
             level="H"
             includeMargin={true}

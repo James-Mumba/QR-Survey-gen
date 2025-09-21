@@ -6,6 +6,10 @@ import {
   updateDoc,
   arrayUnion,
   doc,
+  deleteDoc,
+  where,
+  query,
+  getDocs,
 } from "firebase/firestore";
 
 export const createSurvey = async (questions, userId, expiryDate) => {
@@ -57,4 +61,30 @@ export const isSurveyExpired = (expiresAt) => {
   const now = new Date();
   const expiry = expiresAt.toDate ? expiresAt.toDate() : new Date(expiresAt);
   return now > expiry;
+};
+
+// Add this at the bottom
+export const deleteSurvey = async (surveyId) => {
+  try {
+    // First, delete all responses for this survey
+    const responsesQuery = query(
+      collection(db, "responses"),
+      where("surveyId", "==", surveyId)
+    );
+    const responsesSnapshot = await getDocs(responsesQuery);
+
+    const deletePromises = responsesSnapshot.docs.map((doc) =>
+      deleteDoc(doc.ref)
+    );
+
+    await Promise.all(deletePromises);
+
+    // Then delete the survey itself
+    await deleteDoc(doc(db, "surveys", surveyId));
+
+    console.log("✅ Survey and all responses deleted");
+  } catch (err) {
+    console.error("❌ Error deleting survey:", err);
+    throw err;
+  }
 };

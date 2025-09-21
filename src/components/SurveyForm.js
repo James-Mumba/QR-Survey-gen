@@ -5,7 +5,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import "./SurveyForm.css";
 import { submitResponse } from "../utils/surveyService";
-import { isSurveyExpired } from "../utils/surveyService";
 
 function SurveyForm() {
   const { surveyId } = useParams();
@@ -18,22 +17,23 @@ function SurveyForm() {
 
   useEffect(() => {
     const fetchSurvey = async () => {
+      console.log("🔍 Fetching survey with ID:", surveyId); // 👈 ADD THIS
+
       try {
         const docRef = doc(db, "surveys", surveyId);
         const docSnap = await getDoc(docRef);
 
+        console.log("📄 Doc exists?", docSnap.exists()); // 👈 ADD THIS
+
         if (docSnap.exists()) {
           setSurvey(docSnap.data());
-        }
-        if (survey.expiresAt && isSurveyExpired(survey.expiresAt)) {
-          setError("This survey has expired");
-          setLoading(false);
-          return;
         } else {
           setError("Survey not found");
+          console.log("❌ Survey does not exist in Firestore"); // 👈 ADD THIS
         }
       } catch (err) {
         setError("Error loading survey");
+        console.error("💥 Error fetching survey:", err); // 👈 ADD THIS
       }
       setLoading(false);
     };

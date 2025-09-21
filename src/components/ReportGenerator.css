@@ -1,0 +1,251 @@
+/* src/components/ReportGenerator.css */
+.report-container {
+  max-width: 95%;
+  width: 100%;
+  margin: 20px auto;
+  padding: 24px;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  color: white;
+}
+
+.report-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.report-header h1 {
+  font-size: 2.2rem;
+  margin: 0 0 10px;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.report-header p {
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.controls {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.survey-select {
+  padding: 14px 24px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 1rem;
+  min-width: 300px;
+  cursor: pointer;
+}
+
+.survey-select:focus {
+  outline: none;
+  border-color: white;
+  background: rgba(255,255,255,0.2);
+}
+
+.export-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.export-btn:hover {
+  background: #ff5252;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+}
+
+.export-btn:disabled {
+  background: rgba(255,255,255,0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.1);
+  padding: 30px 20px;
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #ffdd57;
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.responses-preview {
+  background: rgba(0,0,0,0.1);
+  padding: 30px;
+  border-radius: 16px;
+  margin-top: 30px;
+}
+
+.responses-preview h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+.responses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.response-preview {
+  background: rgba(255,255,255,0.1);
+  padding: 24px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.response-preview:hover {
+  transform: translateX(5px);
+  background: rgba(255,255,255,0.15);
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.response-id {
+  background: #4ecdc4;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.source-tag {
+  background: rgba(255,255,255,0.2);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.preview-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-answer {
+  background: rgba(0,0,0,0.1);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.more-answers {
+  background: rgba(255,255,255,0.1);
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.loading, .no-data {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.3rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  margin: 30px 0;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .report-container {
+    margin: 10px;
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .report-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .survey-select {
+    min-width: auto;
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+
+  .responses-preview {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .report-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+  }
+
+  .preview-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}

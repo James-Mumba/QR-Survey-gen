@@ -1,0 +1,319 @@
+/* src/components/SurveyUpload.css */
+.upload-container {
+  max-width: 90%;
+  width: 100%;
+  margin: 20px auto;
+  padding: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  color: white;
+}
+
+.upload-header h2 {
+  font-size: 1.8rem;
+  margin: 0 0 8px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  opacity: 0.9;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+.upload-area {
+  background: rgba(255,255,255,0.1);
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 16px 24px;
+  background: rgba(255,255,255,0.2);
+  border: 2px dashed rgba(255,255,255,0.4);
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.file-label:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+}
+
+.upload-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
+}
+
+.upload-btn:hover {
+  background: #ff5252;
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+}
+
+.upload-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error-message {
+  color: #ff6b6b;
+  background: rgba(255,107,107,0.1);
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.success-section {
+  background: rgba(255,255,255,0.1);
+  padding: 25px;
+  border-radius: 16px;
+  margin: 30px 0;
+  text-align: center;
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.celebration {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  animation: bounce 1s ease infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+.survey-id {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.share-text {
+  margin: 15px 0 5px;
+  font-weight: 500;
+}
+
+.share-url {
+  background: rgba(0,0,0,0.2);
+  padding: 12px;
+  border-radius: 8px;
+  font-family: monospace;
+  word-break: break-all;
+  margin-bottom: 25px;
+}
+
+.qr-section {
+  margin: 30px 0;
+  text-align: center;
+}
+
+.qr-wrapper {
+  background: white;
+  display: inline-block;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.scan-instruction {
+  margin-top: 15px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.preview-section {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 16px;
+  margin-top: 30px;
+}
+
+.preview-section h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.questions-list {
+  display: grid;
+  gap: 16px;
+}
+
+.question-card {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  transition: transform 0.2s ease;
+}
+
+.question-card:hover {
+  transform: translateX(5px);
+  background: rgba(255,255,255,0.15);
+}
+
+.q-badge {
+  background: #ff6b6b;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 50%;
+  font-weight: bold;
+  min-width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.q-text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* 📱 RESPONSIVE DESIGNS */
+@media (max-width: 768px) {
+  .upload-container {
+    margin: 10px;
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .upload-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .file-label {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  .upload-btn {
+    padding: 14px 24px;
+    font-size: 1rem;
+  }
+
+  .success-section, .preview-section {
+    padding: 20px 16px;
+  }
+
+  .question-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .q-badge {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .upload-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .upload-btn {
+    font-size: 0.95rem;
+    padding: 12px 20px;
+  }
+
+  .celebration {
+    font-size: 1.5rem;
+  }
+}
+
+/* Add to SurveyUpload.css */
+.expiry-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.expiry-section label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.expiry-input {
+  padding: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 1rem;
+}
+
+.expiry-input:focus {
+  outline: none;
+  border-color: white;
+  background: rgba(255,255,255,0.2);
+}
+
+/* Add to SurveyUpload.css */
+.expiry-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.expiry-section label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.expiry-input {
+  padding: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 1rem;
+}
+
+.expiry-input:focus {
+  outline: none;
+  border-color: white;
+  background: rgba(255,255,255,0.2);
+}
+
+ 
